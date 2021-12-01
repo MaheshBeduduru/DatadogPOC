@@ -1,0 +1,19 @@
+<ng-container>
+  <div>
+    <ng-template #popContent>
+      <label>Notes</label>
+      <p>The id of client is test</p>
+      <p>Event identifier test2</p>
+    </ng-template>
+
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      placement="bottom"
+      [ngbPopover]="popContent"
+      popoverTitle="Popover on bottom"
+    >
+      Popover on bottom
+    </button>
+  </div>
+</ng-container>

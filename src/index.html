@@ -1,13 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>DatadogPOC</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>DatadogPOC</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script
+      src="./assets/datadog/datadog-rum.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./assets/datadog/datadog-logs.js"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body>
+    <script>
+      window.DD_RUM &&
+        DD_RUM.init({
+          applicationId: 'f82c57ea-4acc-4179-85b0-8e67f82219a5"',
+          clientToken: "pub1e131366267d280720170500ed19d5d8",
+          beforeSend: (event) => {
+            if (this.shouldDiscard(event)) {
+              return false;
+            }
+            return false;
+          },
+          site: "datadoghq.com",
+          service: "cilckable elements",
+          env: "datadog.POC",
+          version: "2021.3",
+          sampleRate: 100,
+          trackInteractions: true,
+          trackSessionAcrossSubdomains: true,
+          useSecureSessionCookie: true,
+          useCrossSiteSessionCookie: true,
+        });
+
+      var nodeName;
+
+      window.onclick = (e) => {
+        console.log(e.target.nodeName);
+        nodeName = e.target.nodeName;
+      };
+
+      function shouldDiscard(event) {
+        // console.log("datadog running to collect logs");
+
+        console.log(JSON.stringify(event));
+        //console.log(nodeName);
+        if (event.action != null && event.action.target != null) {
+          alert(JSON.stringify(event));
+          // console.log(JSON.stringify(event));
+        }
+
+        if (nodeName == "APP-ROOT") {
+          console.log("clicked on entire container");
+        }
+        return true;
+      }
+    </script>
+    <app-root></app-root>
+  </body>
 </html>
